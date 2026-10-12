@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<!-- ① 文档声明：告诉浏览器，这是HTML5网页 -->
+<html lang="zh-CN">
+<!-- html根标签，lang="zh-CN"代表网页语言是中文 -->
+<head>
+<!-- head头部：存放网页看不见的配置，不会显示在页面上 -->
+<meta charset="UTF-8" />
+<!-- 字符编码，UTF-8，保证中文不乱码！非常重要 -->
+<title>Happy Birthday</title>
+<!-- 浏览器标签页上显示的标题文字 -->
+<style>
+/* ========== CSS 样式区域 ========== */
+/* CSS：负责外观、颜色、布局、动画效果 */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  /* * 代表所有元素，清空浏览器默认自带边距，统一盒模型 */
+
+  body {
+    min-height: 100vh;
+    /* 页面高度占满整个浏览器可视区域 */
+    background: linear-gradient(135deg, #ffeef8 0%, #ffd6f0 45%, #c9f0ff 100%);
+    /* 渐变背景，粉+浅蓝渐变 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* flex布局，让里面所有内容水平、垂直居中 */
+    font-family: "Comic Sans MS", "Arial", sans-serif;
+    overflow: hidden;
+    /* 超出页面的内容直接隐藏，不让页面出现滚动条 */
+    position: relative;
+    /* 相对定位，给彩带做定位基准 */
+  }
+
+  h1 {
+    font-size: 42px;
+    color: #ff4d88;
+    text-shadow: 2px 2px 0 #fff, 4px 4px 12px rgba(255, 77, 136, 0.35);
+    /* 文字阴影，让字更好看 */
+    letter-spacing: 2px;
+    /* 字间距，文字拉开一点距离 */
+    animation: pop 1.4s ease-out both;
+    /* 绑定名为 pop 的动画，1.4秒完成 */
+    margin-bottom: 24px;
+    /* 和下面小人隔开24像素距离 */
+  }
+
+  .stage {
+    position: relative;
+    width: 420px;
+    height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  svg {
+    width: 320px;
+    height: 360px;
+    animation: breathe 2.8s ease-in-out infinite;
+    /* breathe呼吸动画，无限循环 */
+    transform-origin: center bottom;
+    /* 动画旋转的基准点：图形底部中心 */
+  }
+
+  .head {
+    transform-origin: 160px 80px;
+    animation: headShake 2.4s ease-in-out infinite;
+    /* 头部摇头动画 */
+  }
+
+  .left-arm {
+    transform-origin: 90px 140px;
+    animation: waveLeft 1s ease-in-out infinite;
+    /* 左胳膊挥手动画 */
+  }
+
+  .right-arm {
+    transform-origin: 230px 140px;
+    animation: waveRight 1s ease-in-out infinite;
+    /* 右胳膊挥手动画 */
+  }
+
+  .leg {
+    transform-origin: 160px 240px;
+    animation: legMove 1.6s ease-in-out infinite;
+    /* 腿摆动动画 */
+  }
+
+  .confetti {
+    position: absolute;
+    top: -20px;
+    width: 10px;
+    height: 14px;
+    opacity: 0;
+    animation: fall linear infinite;
+    /* 彩带下落动画 */
+  }
+
+  /* 下面 @keyframes 定义所有动画的全过程 */
+  @keyframes pop {
+    0% { transform: scale(0.2); opacity: 0; }
+    /* 动画开始：文字缩小到0.2倍，完全透明 */
+    60% { transform: scale(1.15); opacity: 1; }
+    /* 60%进度：放大到1.15倍，完全显示 */
+    100% { transform: scale(1); opacity: 1; }
+    /* 结束：恢复正常大小 */
+  }
+
+  @keyframes breathe {
+    0%, 100% { transform: translateY(0) scale(1); }
+    50% { transform: translateY(-6px) scale(1.02); }
+    /* 中间往上飘6px，轻微放大，模拟呼吸 */
+  }
+
+  @keyframes headShake {
+    0%, 100% { transform: rotate(-6deg); }
+    50% { transform: rotate(7deg); }
+    /* 头部左右小幅度旋转摇头 */
+  }
+
+  @keyframes waveLeft {
+    0%, 100% { transform: rotate(20deg); }
+    50% { transform: rotate(-30deg); }
+  }
+
+  @keyframes waveRight {
+    0%, 100% { transform: rotate(-20deg); }
+    50% { transform: rotate(40deg); }
+  }
+
+  @keyframes legMove {
+    0%, 100% { transform: rotate(-10deg); }
+    50% { transform: rotate(12deg); }
+  }
+
+  @keyframes fall {
+    0% { transform: translateY(0) rotate(0); opacity: 0; }
+    10% { opacity: 1; }
+    100% { transform: translateY(450px) rotate(720deg); opacity: 0; }
+    /* 彩带从顶部下落，旋转2圈，落地消失 */
+  }
+</style>
+</head>
+
+<body>
+<!-- body：页面上**看得见**的全部内容 -->
+  <h1>happy birthday！girl！</h1>
+  <!-- h1 大标题标签，放我们的生日文字 -->
+
+  <div class="stage">
+  <!-- div 容器，当做小人的舞台 -->
+    <svg viewBox="0 0 320 360">
+    <!-- SVG：矢量绘图标签，用来画小人，放大不会模糊 -->
+      <!-- 头 -->
+      <g class="head">
+      <!-- g标签：分组，把眼睛嘴巴圆圈打包在一起，统一做摇头动画 -->
+        <circle cx="160" cy="80" r="34" fill="#ffd9b3" stroke="#333" stroke-width="3"/>
+        <!-- circle画圆形：cx cy圆心坐标，r半径；fill填充肤色，stroke描边黑色 -->
+        <circle cx="148" cy="76" r="4" fill="#333"/> <!--左眼小圆点-->
+        <circle cx="172" cy="76" r="4" fill="#333"/> <!--右眼小圆点-->
+        <path d="M148 92 Q160 104 172 92" stroke="#333" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- path画曲线，Q是贝塞尔曲线，画微笑嘴巴 -->
+      </g>
+
+      <!-- 身体竖线 -->
+      <line x1="160" y1="114" x2="160" y2="240" stroke="#333" stroke-width="4" stroke-linecap="round"/>
+      <!-- line画线：x1 y1起点，x2 y2终点 -->
+
+      <!-- 左手 -->
+      <line class="left-arm" x1="90" y1="140" x2="160" y2="160"
+            stroke="#333" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- 右手 -->
+      <line class="right-arm" x1="230" y1="140" x2="160" y2="160"
+            stroke="#333" stroke-width="4" stroke-linecap="round"/>
+
+      <!-- 两条腿 -->
+      <line class="leg" x1="140" y1="330" x2="160" y2="240"
+            stroke="#333" stroke-width="4" stroke-linecap="round"/>
+      <line x1="180" y1="330" x2="160" y2="240"
+            stroke="#333" stroke-width="4" stroke-linecap="round"/>
+    </svg>
+  </div>
+
+  <!-- 音频标签：生日歌 -->
+  <audio id="birthdayMusic" src="./1.mp3" preload="auto" loop>
+    <!-- audio 音频标签，src是在线音乐链接，不用下载本地音频文件！ -->
+  
+
+<script>
+// ========== JavaScript (JS) 脚本区域 ==========
+// JS：负责交互、动态生成彩带、点击播放音乐
+  const stage = document.querySelector('.stage');
+  // 获取页面里class=stage的元素，存到变量stage
+  const music = document.getElementById('birthdayMusic');
+  // 获取音频播放器
+
+  const colors = ['#ff4d88', '#ffd93d', '#6bcb77', '#4d96ff', '#c780fa'];
+  // 定义一个颜色数组，彩带随机从这里挑颜色
+
+  // 点击页面任意位置，播放音乐
+  document.body.addEventListener('click', ()=>{
+    music.play();
+  })
+
+  function createConfetti() {
+  // 自定义函数：生成一条彩带
+    const c = document.createElement('div');
+    // 在网页新建一个div元素，作为彩带
+    c.className = 'confetti';
+    // 给彩带加上confetti样式（CSS里写好的下落动画）
+    c.style.left = Math.random() * 420 + 'px';
+    // left位置随机，0~420像素之间
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    // 随机选上面数组里的一个颜色
+    c.style.animationDuration = (2 + Math.random() * 2) + 's';
+    // 彩带下落时间2~4秒随机
+    c.style.animationDelay = Math.random() + 's';
+    // 彩带延迟0~1秒再开始落
+    stage.appendChild(c);
+    // 把彩带放到舞台里面显示
+
+    setTimeout(() => c.remove(), 4500);
+    // 4500毫秒（4.5秒）之后，删除彩带元素，防止网页越来越卡
+  }
+
+  setInterval(createConfetti, 180);
+  // 定时器：每180毫秒，调用一次createConfetti，生成新彩带
+</script>
+</body>
+</html>
